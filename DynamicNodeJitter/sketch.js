@@ -55,8 +55,8 @@ class Particle {
   tickle() {
     let distance = dist(this.x, this.y, mouseX, mouseY);
     if (distance < tickleDistance) {
-      this.x += random(-1, 1);
-      this.y += random(-1, 1);
+      this.x += random(-1, 2);
+      this.y += random(-2, 1);
     }
   }
 
@@ -97,11 +97,11 @@ function setup() {
     angle[i] = 0;
   }
 
-  for (let i = 0; i < numNodes; i++) {
+    for (let i = 0; i < numNodes; i++) {
     frequency[i] = random(5, 12);
   }
 
-    yValues = new Array(floor(waveWidth / xSpacing));
+  yValues = new Array(floor(waveWidth / xSpacing));
 }
 
 function draw() {
@@ -171,13 +171,13 @@ function moveShape() {
   organicConstant = 1 - ((abs(accelerationX) + abs(accelerationY)) * 0.1);
 
   for (let i = 0; i < numNodes; i++) {
-    if (dist(mouseX, mouseY, nodeStartX[i], nodeStartY[i]) < tickleDistance) {
-      nodeStartX[i] += random(-1, 1);
-      nodeStartY[i] += random(-1, 1);
-    }
-    nodeX[i] = nodeStartX[i] + sin(radians(angle[i])) * (accelerationX * 2);
-    nodeY[i] = nodeStartY[i] + sin(radians(angle[i])) * (accelerationY * 2);
-    angle[i] += frequency[i];
+  if (dist(mouseX, mouseY, nodeStartX[i], nodeStartY[i]) < tickleDistance) {
+    nodeStartX[i] += random(-0.5, 0.1); // Reduced range from -5, 5 to -2, 2
+    nodeStartY[i] += random(-0.5, 0.1); // Reduced range from -5, 5 to -2, 2
+  }
+  nodeX[i] = nodeStartX[i] + sin(radians(angle[i])) * (accelerationX * 2);
+  nodeY[i] = nodeStartY[i] + sin(radians(angle[i])) * (accelerationY * 2);
+  angle[i] += frequency[i];
   }
 }
 
@@ -197,10 +197,10 @@ function calculateWave() {
   for (let j = 0; j < maxWaves; j++) {
     let x = theta;
     for (let i = 0; i < yValues.length; i++) {
-      yValues[i] += (j % 2 === 0 ? sin(x) : cos(x)) * amplitudes[j];
+            yValues[i] += (j % 2 === 0 ? sin(x) : cos(x)) * amplitudes[j];
       x += dx[j];
     }
-      }
+  }
 }
 
 function renderWave() {
@@ -211,6 +211,3 @@ function renderWave() {
     ellipse(x * xSpacing, width / 2 + yValues[x], 16, 16);
   }
 }
-
- 
-
