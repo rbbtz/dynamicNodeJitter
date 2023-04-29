@@ -1,3 +1,12 @@
+function setup() {
+  let canvas = createCanvas(400, 400);
+  canvas.parent('canvas-container');
+}
+
+function draw() {
+  background(220);
+
+// Constants and global variables
 const xSpacing = 8;
 const maxWaves = 4;
 const numParticles = 50;
@@ -29,6 +38,7 @@ let nodeStartX = [],
   frequency = [];
 let organicConstant = 1.0;
 
+// Particle class definition
 class Particle {
   constructor() {
     this.x = random(0, width);
@@ -72,12 +82,17 @@ class Particle {
 }
 
 function setup() {
-  createCanvas(710, 400);
+  const canvas = createCanvas(710, 400);
   frameRate(30);
   colorMode(RGB, 255, 255, 255, 100);
   waveWidth = width + 16;
   centerX = width / 2;
   centerY = height / 2;
+
+  // Center the canvas in the middle of the screen
+  const x = (windowWidth - width) / 2;
+  const y = (windowHeight - height) / 2;
+  canvas.position(x, y);
 
   for (let i = 0; i < numParticles; i++) {
     particles.push(new Particle());
@@ -89,7 +104,7 @@ function setup() {
     dx[i] = (TWO_PI / period) * xSpacing;
   }
 
-  for (let i = 0; i < numNodes; i++) {
+    for (let i = 0; i < numNodes; i++) {
     nodeStartX[i] = 0;
     nodeStartY[i] = 0;
     nodeX[i] = 0;
@@ -97,7 +112,7 @@ function setup() {
     angle[i] = 0;
   }
 
-    for (let i = 0; i < numNodes; i++) {
+  for (let i = 0; i < numNodes; i++) {
     frequency[i] = random(5, 12);
   }
 
@@ -171,13 +186,13 @@ function moveShape() {
   organicConstant = 1 - ((abs(accelerationX) + abs(accelerationY)) * 0.1);
 
   for (let i = 0; i < numNodes; i++) {
-  if (dist(mouseX, mouseY, nodeStartX[i], nodeStartY[i]) < tickleDistance) {
-    nodeStartX[i] += random(-0.5, 0.1); // Reduced range from -5, 5 to -2, 2
-    nodeStartY[i] += random(-0.5, 0.1); // Reduced range from -5, 5 to -2, 2
-  }
-  nodeX[i] = nodeStartX[i] + sin(radians(angle[i])) * (accelerationX * 2);
-  nodeY[i] = nodeStartY[i] + sin(radians(angle[i])) * (accelerationY * 2);
-  angle[i] += frequency[i];
+    if (dist(mouseX, mouseY, nodeStartX[i], nodeStartY[i]) < tickleDistance) {
+      nodeStartX[i] += random(-0.5, 0.1);
+      nodeStartY[i] += random(-0.5, 0.1);
+    }
+    nodeX[i] = nodeStartX[i] + sin(radians(angle[i])) * (accelerationX * 2);
+    nodeY[i] = nodeStartY[i] + sin(radians(angle[i])) * (accelerationY * 2);
+    angle[i] += frequency[i];
   }
 }
 
@@ -197,7 +212,7 @@ function calculateWave() {
   for (let j = 0; j < maxWaves; j++) {
     let x = theta;
     for (let i = 0; i < yValues.length; i++) {
-            yValues[i] += (j % 2 === 0 ? sin(x) : cos(x)) * amplitudes[j];
+      yValues[i] += (j % 2 === 0 ? sin(x) : cos(x)) * amplitudes[j];
       x += dx[j];
     }
   }
@@ -210,4 +225,10 @@ function renderWave() {
   for (let x = 0; x < yValues.length; x++) {
     ellipse(x * xSpacing, width / 2 + yValues[x], 16, 16);
   }
+}
+
+function windowResized() {
+  const x = (windowWidth - width) / 2;
+  const y = (windowHeight - height) / 2;
+  canvas.position(x, y);
 }
