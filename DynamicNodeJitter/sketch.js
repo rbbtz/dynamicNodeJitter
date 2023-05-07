@@ -1,11 +1,3 @@
-function setup() {
-  let canvas = createCanvas(400, 400);
-  canvas.parent('canvas-container');
-}
-
-function draw() {
-  background(220);
-
 // Constants and global variables
 const xSpacing = 8;
 const maxWaves = 4;
@@ -98,13 +90,13 @@ function setup() {
     particles.push(new Particle());
   }
 
-  for (let i = 0; i < maxWaves; i++) {
+    for (let i = 0; i < maxWaves; i++) {
     amplitudes[i] = random(10, 30);
     const period = random(100, 300);
     dx[i] = (TWO_PI / period) * xSpacing;
   }
 
-    for (let i = 0; i < numNodes; i++) {
+  for (let i = 0; i < numNodes; i++) {
     nodeStartX[i] = 0;
     nodeStartY[i] = 0;
     nodeX[i] = 0;
@@ -190,7 +182,7 @@ function moveShape() {
       nodeStartX[i] += random(-0.5, 0.1);
       nodeStartY[i] += random(-0.5, 0.1);
     }
-    nodeX[i] = nodeStartX[i] + sin(radians(angle[i])) * (accelerationX * 2);
+        nodeX[i] = nodeStartX[i] + sin(radians(angle[i])) * (accelerationX * 2);
     nodeY[i] = nodeStartY[i] + sin(radians(angle[i])) * (accelerationY * 2);
     angle[i] += frequency[i];
   }
