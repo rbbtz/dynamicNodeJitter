@@ -81,6 +81,10 @@ function setup() {
   centerX = width / 2;
   centerY = height / 2;
 
+  // Black canvas
+  let canvasContainer = select('body');
+  canvasContainer.style('background-color', '#000');
+
   // Center the canvas in the middle of the screen
   const x = (windowWidth - width) / 2;
   const y = (windowHeight - height) / 2;
